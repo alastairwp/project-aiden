@@ -1,4 +1,3 @@
-import streamlit as st
 from PIL import Image
 
 mercator_logo = Image.open("components/images/mercator_digital_logo.jpeg")

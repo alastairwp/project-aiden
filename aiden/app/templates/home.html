@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Aiden Knowledgebase AI Assistent</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <link href="{% static 'content/css/style.css' %}" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="sidebar">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab">Sources</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab">Settings</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+
+                <!-- Tab 1 -->
+                <div class="tab-pane fade show active" aria-current="page" id="tab1" role="tabpanel">
+                    <h4>Directly import your data</h4>
+                    <p>Convert your data into embeddings for utilization during chat</p>
+                    <div class="form-group">
+                        <label for="usr">Ollama Endpoint</label>
+                        <input type="text" class="form-control" id="usr" placeholder="http://localhost:11434">
+                    </div>
+
+
+                    <button type="button" class="btn btn-warning">Process Directory</button>
+
+                    <hr />
+
+                    <h4>Chat</h4>
+
+                    <label for="dropdownOllamaModel" class="form-label">Ollama Models</label>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownOllamaModel" data-toggle="dropdown" aria-expanded="false">
+                            Ollama
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownOllamaModel">
+                            <li><a class="dropdown-item" href="#">Model2</a></li>
+                            <li><a class="dropdown-item" href="#">Model3</a></li>
+                            <li><a class="dropdown-item" href="#">Model4</a></li>
+                        </ul>
+                    </div>
+
+                    <label for="dropdownChatType" class="form-label">Chat Type</label>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChatType" data-toggle="dropdown" aria-expanded="false">
+                            Context Only
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownChatType">
+                            <li><a class="dropdown-item" href="#">Context Only</a></li>
+                            <li><a class="dropdown-item" href="#">Chat Only</a></li>
+                            <li><a class="dropdown-item" href="#">Context & Chat</a></li>
+                        </ul>
+                    </div>
+
+                    <label for="rangeCitations" class="form-label">Max citations:&nbsp;</label><span id="curr"></span>
+                    <input id="rangeCitations" min="0" max="10" step="1" type="range" class="form-range" />
+
+                    <label for="dropdownChatMode" class="form-label">Chat Mode</label>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChatMode" data-toggle="dropdown" aria-expanded="false">
+                            Compact
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownChatMode">
+                            <li><a class="dropdown-item" href="#">Refine</a></li>
+                            <li><a class="dropdown-item" href="#">Tree summarise</a></li>
+                            <li><a class="dropdown-item" href="#">Simple summarise</a></li>
+                            <li><a class="dropdown-item" href="#">Accumulate</a></li>
+                            <li><a class="dropdown-item" href="#">Compact accumulate</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tab 2 -->
+                <div class="tab-pane fade" id="tab2" role="tabpanel">
+                    <label for="dropdownModel" class="form-label">Chat Mode</label>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownModel" data-toggle="dropdown" aria-expanded="false">
+                            Default (bge-large-en-v1.5)
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownModel">
+                            <li><a class="dropdown-item" href="#">Large (Salesforce/SFR-Embedding-Mistral)</a></li>
+                            <li><a class="dropdown-item" href="#">Other</a></li>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEndpoint">Ollama Endpoint</label>
+                        <input type="text" class="form-control" id="inputEndpoint" placeholder="http://localhost:11434">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            
+            <div class="form-group">
+                <form method="post" action="#">
+                    {% csrf_token %}
+                    <div class="top-section">
+                        <h1>Aiden: Knowledge Hub AI Assistant</h1>
+                        <p>Ingest your data for retrieval augmented generation (RAG) with open-source Large Language Models (LLMs), all without 3rd parties or sensitive information leaving your network.</p>
+                    </div>
+                    <div class="bottom-section">
+                        <form class="input-form">
+                            <input type="text" class="text-input" placeholder="How can I help?">
+                            <button type="submit" class="submit-button">Submit</button>
+                        </form>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <script>
+            var el = document.getElementById('curr');
+            var r = document.getElementById('rangeCitations');
+            el.innerText = r.valueAsNumber;
+            r.addEventListener('change', () => {
+                el.innerText = r.valueAsNumber;
+            })
+        </script>
+
+    </body>
+</html>

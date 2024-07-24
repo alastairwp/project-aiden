@@ -1,9 +1,7 @@
 import ollama
 import os
 
-import streamlit as st
-
-import utils.logs as logs
+import app.components.utils.logs as logs
 
 # This is not used but required by llama-index and must be imported FIRST
 os.environ["OPENAI_API_KEY"] = "sk-abc123"
@@ -53,7 +51,7 @@ def create_client(host: str):
 ###################################
 
 
-def get_models():
+def get_models(request):
     """
     Retrieves a list of available language models from the Ollama server.
 
@@ -72,7 +70,7 @@ def get_models():
         - st.session_state["ollama_models"] is set to the list of available language models.
     """
     try:
-        chat_client = create_client(st.session_state["ollama_endpoint"])
+        chat_client = create_client(request.session["ollama_endpoint"])
         data = chat_client.list()
         models = []
         for model in data["models"]:
@@ -99,7 +97,7 @@ def get_models():
 ###################################
 
 
-@st.cache_data(show_spinner=False)
+# @st.cache_data(show_spinner=False)
 def create_ollama_llm(model: str, base_url: str, system_prompt: str = None, request_timeout: int = 60) -> Ollama:
     """
     Create an instance of the Ollama language model.

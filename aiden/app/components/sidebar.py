@@ -1,7 +1,7 @@
 import streamlit as st
 
-from components.tabs.sources import sources
-from components.tabs.settings import settings
+from aiden.app.components.tabs.sources import sources
+from aiden.app.components.tabs.settings import settings
 
 
 def sidebar():

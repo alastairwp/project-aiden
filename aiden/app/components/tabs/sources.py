@@ -2,7 +2,7 @@ import streamlit as st
 
 from pre_index import run
 import utils.rag_pipeline as rag
-import utils.ollama as ollama
+import aiden.app.components.utils.ollama as ollama
 
 def sources():
     st.title("Directly import your data")
